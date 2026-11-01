@@ -57,7 +57,7 @@ Triggered when:
 
 1. Read the existing `index.md` (if present) and the docs it links to for context.
 2. If no docs exist, scan the existing codebase/README first to infer current architecture, stack, and conventions — and ask the user to confirm or correct that inference rather than starting from zero.
-3. Run only the subset of skills relevant to the change (typically: `technical-blueprint` for the feature itself, `architecture-decision-record` if it affects architecture, `database-design-document` if it touches the data model, `api-design-document` if it adds/changes endpoints, `test-strategy-document` scoped to the feature, `security-threat-model` if it touches auth/payments/PII, `project-plan` if scope/timeline changes, `implementation-plan` if build order changes).
+3. Run only the subset of skills relevant to the change (e.g., `technical-blueprint`, `architecture-decision-record`, `database-design-document`, `api-design-document`, `test-strategy-document`, or `security-threat-model`).
 4. Produce new numbered docs that append to the existing set, never overwriting prior history.
 
 ---
@@ -70,15 +70,15 @@ Every shortcut in the trap table in [reference.md](reference.md#anti-rationaliza
 
 ## Gotchas — Common Orchestrator Mistakes
 
-- **Skipping Phase 0.** The business concept interview is mandatory. Without it, every downstream document is built on assumptions.
-- **Asking inline questions.** Use tool calls (e.g., `AskUserQuestion`) for ALL interview questions. Inline questions pollute conversation context and force users to type responses.
-- **Batching clarifying questions.** One question per tool call. Multiple questions in one message produce partial or shallow answers.
-- **Generating all conditional documents.** Not every project needs a disaster recovery plan or an SLO document. Right-size based on the project's actual stakes.
-- **Deferring consistency checks to the end.** Check after each document. Naming mismatches compound if caught late.
-- **Not reading the skill's SKILL.md before invoking it.** Each skill has its own interview process. Read it, then follow it.
-- **Treating the template as the output.** The template is a skeleton. The interview produces the content that fills it.
-- **Silently overwriting documents on re-run.** Never overwrite. Append new versions or archive old ones.
-- **Writing secrets into documents.** Never write actual API keys, credentials, or connection strings. Reference by name/purpose only.
+- **Skipping Phase 0:** The business concept interview is mandatory; downstream docs rely on it.
+- **Asking inline questions:** Always use tool calls (e.g., AskUserQuestion) for interview questions.
+- **Batching questions:** One question per tool call prevents shallow or partial answers.
+- **Generating all conditional documents:** Right-size to project needs; avoid document bloat.
+- **Deferring consistency checks:** Validate entities and terminology incrementally after each doc.
+- **Ignoring the skill SKILL.md:** Read each specialist skill guide before invoking it.
+- **Treating templates as final output:** Fill skeletons with synthesized interview findings.
+- **Silently overwriting documents:** Never overwrite on re-run; append versions or archive.
+- **Exposing secrets:** Reference credentials by environment variable name only, never literal values.
 
 ---
 
@@ -86,29 +86,29 @@ Every shortcut in the trap table in [reference.md](reference.md#anti-rationaliza
 
 ### The Skill Directory
 
-| Phase | Skill | Produces | Always Core, or Conditional? |
+| Phase | Skill | Produces | Inclusion |
 |:---|:---|:---|:---|
 | 0 | `business-concept` | Problem, users, value proposition, monetization, constraints | Always |
 | 0.5 | `project-plan` | Scope, milestones, RACI, timeline, work breakdown structure | Always |
 | 0.6 | `user-personas-behavior` | User personas, jobs-to-be-done, success metrics, analytics plan | Always |
-| 1 | `technical-feasibility-study` | Go/no-go on a specific risky technical approach | Conditional — only if a specific part of the idea is technically uncertain |
+| 1 | `technical-feasibility-study` | Go/no-go on a specific risky technical approach | Conditional (if technical feasibility is uncertain) |
 | 2 | `technical-specification` | Functional & non-functional requirements (SRS/TSD) | Always |
-| 2.5 | `ux-flow-specification` | User journeys, screen-by-screen flow, every UI state | Conditional — skip only for a pure backend/API-only project with no UI |
+| 2.5 | `ux-flow-specification` | User journeys, screen-by-screen flow, every UI state | Conditional (skip for headless / API-only systems) |
 | 3 | `system-architecture-document` | Overall structure — diagrams, tech stack, NFRs | Always |
-| 3+ | `architecture-decision-record` | One immutable record per significant decision | Ad hoc — created throughout, not as a single upfront document |
-| 4 | `database-design-document` | ERD, schema, indexing, migration plan | Conditional — skip only if the project genuinely has no structured data to persist |
-| 5 | `api-design-document` | API contract, resources, auth, versioning | Conditional — include if there's any internal or external API surface |
-| 5.5 | `admin-access-control-specification` | Roles, permission matrix, audit logging, break-glass access | Conditional — include as soon as there is more than one privilege level |
-| 6 | `security-threat-model` | STRIDE-based threat model and risk register | Conditional — include whenever the project handles accounts, payments, PII, or any external attack surface |
-| 7 | `design-system-specification` | Visual design tokens, components, accessibility | Conditional — skip for API-only or purely internal CLI-type projects |
-| 8 | `technical-blueprint` | Detailed design for one specific feature/component | Ad hoc — one per non-trivial feature surfaced during implementation planning |
+| 3+ | `architecture-decision-record` | One immutable record per significant decision | Ad hoc (created throughout lifecycle) |
+| 4 | `database-design-document` | ERD, schema, indexing, migration plan | Conditional (skip if no structured data to persist) |
+| 5 | `api-design-document` | API contract, resources, auth, versioning | Conditional (if exposing or consuming APIs) |
+| 5.5 | `admin-access-control-specification` | Roles, permission matrix, audit logging, break-glass | Conditional (if system requires multi-role RBAC) |
+| 6 | `security-threat-model` | STRIDE-based threat model and risk register | Conditional (if handling accounts, payments, or PII) |
+| 7 | `design-system-specification` | Visual design tokens, components, accessibility | Conditional (skip for API-only or CLI tools) |
+| 8 | `technical-blueprint` | Detailed design for one specific feature/component | Ad hoc (per non-trivial feature identified) |
 | 8.5 | `implementation-plan` | Dependency-ordered build sequence, phase gates | Always |
 | 9 | `test-strategy-document` | Testing pyramid, mocking strategy, CI gates | Always |
 | 10 | `deployment-plan` | Release strategy, go/no-go gate, rollback | Always |
-| 11 | `technical-runbook` | On-call operations manual | Conditional — include once something will actually run in production |
-| 11.5 | `disaster-recovery-plan` | RTO/RPO, backup strategy, failover runsheets | Conditional — include whenever downtime or data loss has real business or compliance cost |
-| 11.6 | `slo-error-budget-document` | Reliability targets, error budget, burn-rate alerts | Conditional — include once real users/customers depend on uptime |
-| ongoing | `incident-postmortem` | Blameless review of a real incident | Never scheduled upfront — only used reactively after launch |
+| 11 | `technical-runbook` | On-call operations manual | Conditional (for production environments) |
+| 11.5 | `disaster-recovery-plan` | RTO/RPO, backup strategy, failover runsheets | Conditional (if downtime carries business risk) |
+| 11.6 | `slo-error-budget-document` | Reliability targets, error budget, burn-rate alerts | Conditional (when user-facing uptime targets matter) |
+| ongoing | `incident-postmortem` | Blameless review of a real incident | Reactive (post-incident review) |
 
 ### Right-Sizing, Not Maximalism
 
@@ -140,18 +140,12 @@ When your analysis conflicts with the user's stated preference:
 
 ### Diagramming Model Selection
 
-For `system-architecture-document`, do not default to one notation. Ask a short set of plain-language questions and recommend accordingly:
+For `system-architecture-document`, evaluate audience and volatility:
+- Solo/small team, MVP stage: Plain narrative + targeted diagrams + ADR log
+- Growing team, onboarding needs: Full C4 model (Context → Container → Component)
+- Large org, governance requirements: C4 plus 4+1 view breakdown (or ArchiMate)
 
-- How many people need to read and act on this document? (just you / a small team / a large org with multiple teams)
-- Will this document need to stay accurate for years, or does the system change weekly right now?
-- Do you need to show this to non-technical stakeholders, or only engineers?
-
-**Recommendation logic:**
-- Solo/small team, fast-moving, MVP stage → plain narrative + a couple of targeted diagrams + an ADR log
-- Growing team, needs onboarding docs, moderate stability → full C4 (Context → Container → Component)
-- Large org, multiple teams, formal governance needs → C4 plus a 4+1 view breakdown, or ArchiMate if they already use it elsewhere
-
-Always state the recommendation with its reasoning and let the user override.
+Always state the recommendation with its reasoning and confirm with the user.
 
 ---
 
@@ -161,15 +155,9 @@ Always state the recommendation with its reasoning and let the user override.
 
 Before any technical skill runs, interview the user until the business idea itself is complete.
 
-**Interview Mechanism:** Use tool calls (e.g., `AskUserQuestion`) to present questions — do NOT ask inline in the conversation. The user selects from options rather than typing responses. This prevents conversation pollution and ensures clean input capture.
+**Interview Protocol:** Use tool calls (e.g., `AskUserQuestion`) to present questions one at a time with multiple-choice options, a recommended answer, and "I don't know, you decide" as an escape hatch.
 
-**Rules:**
-- One question per tool call
-- Present multiple-choice options with a recommended answer
-- Include "I don't know, you decide" as an escape hatch option
-- Wait for the user's selection before proceeding to the next question
-
-**Standing constraint questions (ask once, early — every downstream document depends on these):**
+**Standing constraint questions (ask once, early — every downstream document depends on these):** (ask once, early — every downstream document depends on these):**
 
 1. Team size and skill level (affects stack/framework recommendations)
 2. Hosting/infra preference or constraint (self-hosted, cloud, existing vendor lock-in)
@@ -230,13 +218,9 @@ For each document in the plan, in order:
 8. **Confirm with the user** before moving to the next — don't silently chain documents with no checkpoint.
 
 **Context Passing Rules:**
-- Business Plan (Phase 0) contains: problem, users, value proposition, monetization, scope, timeline, budget, constraints
-- Project Plan contains: milestones, RACI, dependencies
-- User Personas contains: target users, JTBD, success metrics
-- All subsequent skills MUST read these before asking questions
-- NEVER ask a question that's already answered in a prior document
-
-Create `architecture-decision-record` and `technical-blueprint` documents ad hoc, at the point in the sequence where a significant decision or a non-trivial feature is actually identified — not as single monolithic steps.
+- Read prior documents in `.engineering-docs/` before interviewing.
+- Never re-ask questions answered in earlier documents (business plan, project plan, architecture).
+- Generate `architecture-decision-record` and `technical-blueprint` documents ad hoc when decisions or features arise.
 
 ---
 
@@ -264,15 +248,11 @@ Produce the master index (using `template.md`) — the single document that list
 
 ### Phase 6: Revision (After User Review)
 
-If the user requests changes to any document after reviewing it:
-
-1. **Read the user's feedback carefully** — understand what they want changed
-2. **Check for conflicts** — does the requested change conflict with other documents already generated?
-3. **Apply changes** — update the target document
-4. **Re-run consistency check** — verify the change doesn't break cross-document consistency across the entire set
-5. **Update metadata** — set `last_updated` to today's date
-6. **Update index.md** — reflect the revision in the master index
-7. **Confirm with user** — show the changes and get approval before moving on
+When the user requests changes to any document:
+1. Review user feedback and assess cross-document impacts.
+2. Apply changes and update metadata (`last_updated`, `owner_reviewed`).
+3. Re-verify cross-document consistency and update `index.md`.
+4. Confirm changes with the user before proceeding.
 
 ---
 
@@ -350,26 +330,19 @@ Interviews for a full Mode A pipeline can span multiple sessions. The orchestrat
 
 ---
 
-## Context Management
+## Context Management & Thresholds
 
 For projects requiring 10+ documents, context window management is critical:
-
-- **Between major phases**, suggest the user start a fresh session if context is getting large.
-- **Each document generation** should be as self-contained as possible — the skill reads prior docs from files, not from conversation memory.
-- **The index.md** is the anchor — it's always the first thing read on resume, and it contains everything needed to know what's done and what's next.
+- **Between major phases**, suggest starting a fresh session if context is getting large. A fresh session resumes directly from `index.md`.
+- **Each document generation** is self-contained: the skill reads prior docs from files on disk, not conversational memory.
+- If the agent begins re-asking already answered questions, check [reference.md](reference.md#context-window-thresholds) and recommend starting a fresh session.
+- **`index.md`** serves as the durable progress tracker across session boundaries.
 
 ---
 
 ## Subagent Delegation
 
 For projects requiring 10+ documents, delegate document generation to subagents to preserve the orchestrator's context for coordination. The full recipes — when to delegate, how to prepare the subagent prompt, and which documents may run in parallel versus which must stay sequential — are in [reference.md](reference.md#subagent-delegation); read that section before delegating.
-
----
-
-## Cross-Agent Compatibility
-
-- The orchestrator and all 22 skills must be pure markdown + plain instructions — no logic that depends on a specific agent harness's proprietary tool names.
-- Any harness-specific action (e.g., "write a file," "ask the user a question") must be described in terms every harness supports, not tied to one platform's tool schema.
 
 ---
 
@@ -429,10 +402,6 @@ Include:
 - Any `[agent-decided]` items that need human review
 - The next document in the sequence
 - Estimated time remaining based on remaining documents
-
-## Context Window Thresholds
-
-The proactive rules for long pipelines — when to suggest a fresh session, the re-asking-questions failure signal, and how a fresh session resumes from `index.md` — are in [reference.md](reference.md#context-window-thresholds). See Context Management above for the short version.
 
 ## Next Steps
 
