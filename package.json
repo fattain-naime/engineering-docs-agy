@@ -8,6 +8,21 @@
   },
   "author": "Fattain Naime <iamnaime@builderhall.com>",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "antigravity",
+    "antigravity-plugin",
+    "agy",
+    "engineering-docs",
+    "software-architecture",
+    "c4-model",
+    "technical-documentation",
+    "sre",
+    "skills",
+    "agents"
+  ],
   "files": [
     "plugin.json",
     "mcp_config.json",
