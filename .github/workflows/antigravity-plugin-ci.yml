@@ -1,0 +1,51 @@
+name: Antigravity Plugin CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: antigravity-plugin-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: Validate Antigravity Plugin
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate Plugin & Skills
+        run: npm test
+
+      - name: Validate Manifest JSON Files
+        run: |
+          for f in plugin.json mcp_config.json hooks.json package.json; do
+            if [ -f "$f" ]; then
+              python3 -m json.tool "$f" > /dev/null
+              echo "✓ $f valid"
+            fi
+          done
+
+      - name: Test MCP Server Initialization
+        run: |
+          echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05"}}' | node scripts/validate.js
+          echo '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}' | node scripts/validate.js
+
+      - name: Test Installer CLI
+        run: |
+          node scripts/install.js --help

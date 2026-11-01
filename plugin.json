@@ -1,0 +1,22 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "engineering-docs",
+  "displayName": "Engineering Docs",
+  "version": "1.0.0",
+  "description": "22 engineering documentation skills covering the complete software development lifecycle for Google Antigravity.",
+  "author": {
+    "name": "Fattain Naime",
+    "url": "https://github.com/fattain-naime"
+  },
+  "homepage": "https://github.com/fattain-naime/engineering-docs-agy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fattain-naime/engineering-docs-agy.git"
+  },
+  "logo": "assets/plugin-icon.png",
+  "suggestedPrompts": [
+    "Turn my project idea into complete engineering documentation",
+    "Create a system architecture document with C4 diagrams and tech stack",
+    "Validate our existing engineering docs and check cross-document consistency"
+  ]
+}

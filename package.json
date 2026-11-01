@@ -1,0 +1,36 @@
+{
+  "name": "engineering-docs-agy",
+  "version": "1.0.0",
+  "description": "22 engineering documentation skills covering the complete software development lifecycle for Google Antigravity.",
+  "main": "scripts/install.js",
+  "bin": {
+    "engineering-docs-agy": "scripts/install.js"
+  },
+  "author": "Fattain Naime <iamnaime@builderhall.com>",
+  "license": "MIT",
+  "files": [
+    "plugin.json",
+    "mcp_config.json",
+    "hooks.json",
+    "rules",
+    "skills",
+    "agents",
+    "hooks",
+    "assets",
+    "scripts",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md"
+  ],
+  "scripts": {
+    "test": "node scripts/test-skills.js && node scripts/validate-plugin.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fattain-naime/engineering-docs-agy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fattain-naime/engineering-docs-agy/issues"
+  },
+  "homepage": "https://github.com/fattain-naime/engineering-docs-agy#readme"
+}

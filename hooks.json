@@ -1,0 +1,10 @@
+{
+  "engineering-docs-progress": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "node ./hooks/check-progress.js"
+      }
+    ]
+  }
+}
