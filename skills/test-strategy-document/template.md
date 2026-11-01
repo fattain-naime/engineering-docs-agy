@@ -211,10 +211,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Codebase
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup PHP Environment
-        uses: actions/setup-node@v6 # Or setup-php / setup-python depending on stack
+        uses: actions/setup-node@v7 # Or setup-php / setup-python depending on stack
         with:
           node-version: '24'
 
