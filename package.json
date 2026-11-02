@@ -1,6 +1,6 @@
 {
   "name": "engineering-docs-agy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "22 engineering documentation skills covering the complete software development lifecycle for Google Antigravity.",
   "main": "scripts/install.js",
   "bin": {

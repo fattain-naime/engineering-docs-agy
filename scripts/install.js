@@ -17,7 +17,7 @@ ${CYAN}${BOLD}+-------------------------------------------------+
 |                                                 |
 |     ENGINEERING DOCUMENTATION PLUGIN (AGY)      |
 |           Google Antigravity Edition            |
-|              v1.0.0 - 22 Skills                 |
+|              v1.0.1 - 22 Skills                 |
 |                                                 |
 +-------------------------------------------------+${RESET}
 `);
