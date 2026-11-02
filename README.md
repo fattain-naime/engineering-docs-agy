@@ -159,39 +159,6 @@ Registers a `SessionStart` command hook that executes `hooks/check-progress.js`.
 
 ---
 
-## Publishing to the Google Antigravity Plugin Store / Marketplace
-
-To list **Engineering Docs** on the official Antigravity Marketplace:
-
-1. **Local Test Suite:**
-   Ensure all skills, manifest fields, and MCP server endpoints pass validation:
-   ```bash
-   npm test
-   ```
-
-2. **Publish Repository:**
-   Push this repository to GitHub under `https://github.com/fattain-naime/engineering-docs-agy`.
-
-3. **Create Release Tag:**
-   ```bash
-   git tag v1.0.0
-   git push origin v1.0.0
-   ```
-
-4. **Submit Marketplace Listing:**
-   Submit the repository URL to the **Google Antigravity Marketplace Registry** via [antigravity.google/docs/plugins](https://antigravity.google/docs/plugins).
-   - **Catalog ID:** `fattain-naime/engineering-docs-agy` (or `engineering-docs`)
-   - **Display Name:** `Engineering Docs`
-   - **Category:** `Developer Tools` / `Productivity`
-   - **Logo:** `assets/plugin-icon.png`
-
-Once verified by Google, users can discover and install your plugin with a single click:
-```html
-<plugin-card catalog-id="engineering-docs"></plugin-card>
-```
-
----
-
 ## License
 
 MIT © [Fattain Naime](https://github.com/fattain-naime)
