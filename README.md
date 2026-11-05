@@ -2,7 +2,7 @@
 
 > **22 composable, auto-triggering skills** that turn Google Antigravity into a principal software engineer — from raw idea to production-ready documentation.
 
-[![Google Antigravity Plugin](https://img.shields.io/badge/Google%20Antigravity-Plugin-4285F4?logo=google&logoColor=white)](https://antigravity.google) [![npm version](https://img.shields.io/npm/v/engineering-docs-agy.svg)](https://www.npmjs.com/package/engineering-docs-agy) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![GitHub stars](https://img.shields.io/github/stars/fattain-naime/engineering-docs-agy.svg)](https://github.com/fattain-naime/engineering-docs-agy)
+[![Google Antigravity Plugin](https://img.shields.io/badge/Google%20Antigravity-Plugin-4285F4?logo=google&logoColor=white)](https://antigravity.google) [![npm version](https://img.shields.io/npm/v/engineering-docs-agy.svg)](https://www.npmjs.com/package/engineering-docs-agy) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![GitHub stars](https://img.shields.io/github/stars/fattain-naime/engineering-docs-agy.svg)](https://github.com/fattain-naime/engineering-docs-agy) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/fattain-naime/engineering-docs-agy)
 
 ---
 
